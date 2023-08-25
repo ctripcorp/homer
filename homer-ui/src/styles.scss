@@ -1,0 +1,599 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+$roboto-font-path: "~roboto-fontface/fonts" !default;
+//@import "~roboto-fontface/css/roboto/sass/roboto-fontface";
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@angular/material/theming';
+@import 'theme.scss';
+@include mat-core();
+// add material icons styles font
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./assets/fonts/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(./assets/fonts/MaterialIcons-Regular.woff2) format('woff2'),
+       url(./assets/fonts/MaterialIcons-Regular.woff) format('woff'),
+       url(./assets/fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	src: url(./assets/fonts/Roboto-Regular.ttf) format('truetype');
+}
+/// fonts settings:
+h1,h2,h3,h4,p,strong,em,b,
+mat-label,
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content,.mat-table,.mat-button, 
+.mat-raised-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button, .mat-fab, .mat-mini-fab,
+.ag-theme-material,
+.ag-header-cell, .ag-cell-wrapper,
+.label-callid,.title,
+.ag-filter-select,.ag-filter .ag-filter-filter, 
+button, .md-drppicker, .month,
+.ag-paging-panel, .cdk-drag {
+	font-family:'Roboto', Helvetica, Arial, sans-serif;
+}
+button:focus{
+	border:none;
+	outline:none;
+}
+select {
+	padding:3px;
+	border-radius: 3px;
+	cursor:pointer;
+}
+// ag-borders adjustment
+.ag-theme-material .ag-ltr .ag-cell {
+	border-right: 1px solid lightgray;
+}
+.title{font-size:16px;}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+
+
+// using deeppurple-amber color combo: https://github.com/angular/material2/blob/master/src/lib/core/theming/prebuilt/deeppurple-amber.scss
+$primary: mat-palette($homerprimary);
+$accent:  mat-palette($homeraccent);
+$checkboxprimary:  mat-palette($checkbox-color);
+
+$theme: mat-light-theme($primary, $accent, $checkboxprimary);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
+
+// adjust the icons path
+$ag-mat-icons-path: "~ag-grid-community/src/styles/ag-theme-material/icons/";
+$ag-icons-path: "~ag-grid-community/src/styles/ag-theme-base/icons/";
+
+/* ag-grid */
+// changes the default icon color
+$ag-icon-color: #0077f9;
+$ag-icon-checkbox-checked-color:   #0077f9;
+// changes the selected checkbox check mark color
+$ag-accent-color: #0077f9;
+$header-height: 50px;
+$row-height: 40px;
+$row-border-width: 1px;
+$hover-color: cornsilk;
+$ag-suppress-legacy-var-import: true;
+// fix borders ag-grid
+.ag-row{
+	border:none !important;
+}
+
+.ag-cell {
+	padding-right:5px !important;
+	padding-left:5px !important;
+	border:none !important;
+	border-right:1px solid lightgray !important;
+}
+
+.ag-header-cell{
+	padding-right:5px !important;
+	padding-left: 5px !important;
+}
+
+a:not([href]){
+  cursor: pointer; 
+  -webkit-user-select: none; 
+  -moz-user-select: none; 
+  user-select: none
+}
+
+.ag-row-selected {
+    background-color: #eee !important;
+}
+
+
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+
+$ag-mat-primary: mat-color($homerprimary);
+$ag-mat-accent: mat-color($homeraccent);
+
+//@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import '~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material';
+
+$flow-checkbox-color: mat-color($checkbox-color);
+
+.material-icons.md-18 { font-size: 18px; }
+
+#grid-container {
+  width: 80%;
+  margin: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main-container {
+  height: calc(100vh - 104px);;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.content-container {
+  height: 100vh;
+}
+
+gridster {
+  background: #f2f2f2 !important;
+}
+
+gridster-item {
+  box-sizing: border-box;
+  background: #fff;
+  border-top-left-radius: .30rem;
+  border-top-right-radius: .30rem;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.box-header {
+	border-bottom: 1px solid #fff;
+	padding: 0 30px 0 10px;
+	cursor: move;
+	position: relative;
+	h3 {
+		margin-top: 8px;
+		display: inline-block;
+		color: #909090;
+	
+  font-size: 14px !important;
+		text-transform: capitalize;
+		font-weight: bold;
+	}
+}
+.box-header-btns {
+	top: 4px;
+	right: 10px;
+	cursor: pointer;
+	position: absolute;
+}
+.box-icon-header {
+	font-size: 16px;
+}
+.pull-right {
+	font-size: 16px;
+	color: #333;
+	text-decoration: none;
+}
+[draggable] {
+	user-select: none;
+	cursor: pointer;
+}
+.header {
+	.ng-star-inserted {
+		.md-drppicker {
+			.buttons {
+				position: absolute;
+				right: 1rem;
+				bottom: 1rem;
+			}
+		}
+	}
+}
+.alert {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 9999;
+}
+.detail-container {
+	.mat-tab-body-wrapper {
+		height: 100%;
+	}
+}
+.out-window {
+	.mat-tab-body-content {
+	
+		&.ng-trigger {
+			&.ng-trigger-translateTab {
+				height: calc(100vh - 3.05rem) !important;
+			}
+		}
+	}
+	.ngx-json-viewer {
+		height: initial !important;
+		font-size: 12px !important;
+	}
+}
+
+login-layout {
+  & mat-card-header {
+    & .mat-card-header-text {
+      margin: auto;
+    }
+  }
+}
+ace-editor {
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.4);
+}
+.md-drppicker {
+	.ranges {
+		ul {
+			list-style: none;
+			margin: 0 auto;
+			padding: 0;
+			width: 100%;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			li {
+				button {
+					padding: 0.2rem 0.7rem !important;
+					&.active {
+						border-radius: 3px;
+						background-color: #10c1cf !important;
+						color: #000 !important;
+					}
+				}
+			}
+		}
+	}
+	&.double {
+		&.drops-down-left {
+			&.ltr {
+				&.show-ranges {
+					&.shown {
+						top: 4.5rem !important;
+						left: auto !important;
+						right: 1rem !important;
+					}
+				}
+			}
+		}
+	}
+	.btn {
+		background-color: #10c1cf !important;
+		color: #000 !important;
+	}
+}
+.mat-dialog-content {
+	max-height: 100vh;
+}
+.mat-toolbar-row, .mat-toolbar-single-row {
+	height: 45px !important;
+}
+.message-container {
+	.ngx-json-viewer {
+		height: initial !important;
+		font-size: 12px !important;
+	}
+}
+.detail-container {
+	border-radius: 8px !important;
+}
+.mat-toolbar {
+	&.mat-primary {
+		background: #000000;
+		color: white !important;
+	}
+}
+.calendar-table {
+	color: black !important;
+}
+h3 {
+	font-size: 1.0rem !important;
+}
+.red-container {
+	padding: 0.3rem;
+	background-color: rgb(243, 243, 243) !important;
+}
+.mat-figure {
+	.mat-raised-button {
+		&:not([class*=mat-elevation-z]) {
+			width: 80%;
+			height: 80%;
+		}
+	}
+}
+.label-callid {
+	background: #ffffff;
+}
+.mat-checkbox-layout {
+	.mat-checkbox-label {
+		line-height: 24px;
+		min-width: 95px;
+	}
+}
+.modal-resizable {
+	.mat-dialog-content {
+		max-height: initial !important;
+	}
+}
+.div-field {
+	& > span {
+		&.Pwhite {
+			color: black;
+		}
+		&.Pbracket {
+			color: darkred;
+		}
+		&.Pequally {
+			color: darkgrey;
+		}
+		&.Pquotes {
+			color: darkgreen;
+		}
+		&.Plabel {
+			color: blue;
+		}
+		&.SIwhite {
+			color: black;
+		}
+		&.SIbracket {
+			color: darkred;
+		}
+		&.SInumber {
+			color: #c300da;
+		}
+		&.SIequally {
+			color: brown;
+		}
+		&.SIquotes {
+			color: darkgreen;
+			font-style: italic;
+			font-weight: bold;
+		}
+		&.SIlabel {
+			color: blue;
+			font-weight: bold;
+		}
+	}
+}
+.add-widget-button {
+	width: 200px !important;
+}
+.md-drppicker td.active, .md-drppicker td.active:hover {
+	background-color: #10c1cf !important;
+	color: #000 !important;
+}
+.loki-highlight {
+	word-break: break-all;
+	span {
+		color: black;
+		background-color: orange;
+		padding: 3px 0;
+		border-radius: 4px;
+	}
+}
+.action-buttons {
+	padding: 5px;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	& > button {
+		margin: 7px;
+		font-size: 0.75em;
+		text-transform: Capitalize;
+		letter-spacing: 1px;
+		color: #3f3f3f;
+	
+	}
+}
+.setting-buttons {
+	padding: 5px;
+	position: relative;
+	bottom: 10px;
+	right: 10px;
+	& > button {
+		margin: 7px;
+		font-size: .75em;
+		text-transform: capitalize;
+		letter-spacing: 1px;
+		color: #3f3f3f;
+	}
+}
+.widget-block {
+	padding: 10px;
+}
+.example-container {
+	font-size: 13px;
+}
+.circle-swatch {
+	.swatch {
+		border: 1px solid;
+	}
+}
+.chrome-picker {
+	width: 156px !important;
+}
+
+.ag-theme-material{
+	font-size: 14px;
+}
+.mouse-layer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: transparent;
+    z-index: 9999999;
+}
+
+.ngx-json-viewer {
+	width: 100%;
+	height: 100%;
+	font-size:12px !important;
+	overflow: hidden;
+	position: relative;
+	.segment {
+	padding:0;
+    margin: 0px 0px 0px 12px;
+    background: #fafafa55;
+		.segment-main {
+			word-wrap: break-word;
+			.toggler {
+				position: absolute;
+				margin-left: -14px;
+				margin-top: 3px;
+				font-size: 0.8em;
+		
+				vertical-align: middle;
+				color: #787878;
+				&::after {
+					display: inline-block;
+					content: "►";
+					-webkit-transition: -webkit-transform 0.1s ease-in;
+					transition: -webkit-transform 0.1s ease-in;
+					transition: transform 0.1s ease-in;
+					transition: transform 0.1s ease-in, -webkit-transform 0.1s ease-in;
+				}
+			}
+			.segment-key {
+        color: #3f3f3f !important;
+        font-weight:bold;
+        padding:6px;
+
+			}
+			.segment-separator {
+				color: #999;
+			}
+			.segment-value {
+				color: #000;
+			}
+		}
+		.children {
+			margin-left: 12px;
+		}
+	}
+	.segment-type-string {
+		>.segment-main {
+			>.segment-value {
+				color: #606060 !important;
+			}
+		}
+	}
+	.segment-type-number {
+		>.segment-main {
+			>.segment-value {
+				color: #6f6f6f !important;
+			}
+		}
+	}
+	.segment-type-boolean {
+		>.segment-main {
+			>.segment-value {
+				color: #6d6d6d;
+			}
+		}
+	}
+	.segment-type-date {
+		>.segment-main {
+			>.segment-value {
+				color: #4f4f4f;
+			}
+		}
+	}
+	.segment-type-array {
+		>.segment-main {
+			>.segment-value {
+				color: rgb(128, 128, 128);
+			}
+			white-space: nowrap;
+		}
+	}
+	.segment-type-object {
+		>.segment-main {
+			>.segment-value {
+				color: #999;
+			}
+			white-space: nowrap;
+		}
+	}
+	.segment-type-function {
+		>.segment-main {
+			>.segment-value {
+				color: #999;
+			}
+		}
+	}
+	.segment-type-null {
+		>.segment-main {
+			>.segment-value {
+        color: #999 !important;
+        background:none !important;
+			
+			}
+		}
+	}
+	.segment-type-undefined {
+		>.segment-main {
+			>.segment-value {
+				color: #fff;
+			}
+			>.segment-key {
+				color: #999;
+			}
+		}
+	}
+	.expanded {
+		>.toggler {
+			&::after {
+				-webkit-transform: rotate(90deg);
+				transform: rotate(90deg);
+			}
+		}
+	}
+	.expandable {
+		cursor: pointer;
+		>.toggler {
+			cursor: pointer;
+		}
+	}
+}

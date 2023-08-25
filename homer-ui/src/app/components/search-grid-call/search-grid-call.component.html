@@ -1,0 +1,94 @@
+<ng-container *ngIf="isLokiQuery; else base">
+    <app-tab-loki [isDisplayResult]="true"
+        [isResultPage]="!id"
+        [logQlText]="queryTextLoki"></app-tab-loki>
+</ng-container>
+<ng-template #base>
+    <input [className]="'regex-filter' + (inContainer ? ' inContainer' : '')" placeholder="Regex Results Filter"
+    type="search" [(ngModel)]="filterGridValue" (keyup)="setQuickFilter()">
+    <ag-grid-angular 
+*ngIf="loader === false; else Loader"
+[ngStyle]="{
+        'height': inContainer ?
+          (isLokiQuery ? 'calc(100% - 67px)': '100%') :
+          (isLokiQuery ? 'calc(100vh - 112px)' : 'calc(100vh - 45px)'),
+        'width': '100%'
+    }" 
+    class="ag-theme-material" [defaultColDef]="defaultColDef" [gridOptions]="gridOptions" [rowData]="rowData"
+    [columnDefs]="columnDefs" [enableRangeSelection]="true" [rowMultiSelectWithClick]="true" [pagination]="true"
+    (gridReady)="onGridReady($event)" [context]="context" [enableCellTextSelection]="true"
+    [overlayNoRowsTemplate]="noRowsTemplate"
+    (columnMoved)="onColumnMoved($event)" [frameworkComponents]="frameworkComponents"></ag-grid-angular>
+
+    <div *ngIf="!isLokiQuery && !inContainer" class="search-slider-footer"
+    [ngStyle]="{'bottom': !isSearchPanel ? '-20rem': null}">
+    <div style="float: right; opacity: 0.7">
+        <button title="Close" (click)="isSearchPanel=false" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="content">
+        <!-- search slider container -->
+        <app-smart-input-widget [onlySmartField]="true" [targetResultId]="id" [fields]="searchSliderFields" [config]="config"
+            [autoline]="true" (dosearch)="isThisSelfQuery=true;update(true);" #searchSlider>
+        </app-smart-input-widget>
+        <mat-label *ngIf="searchSliderFields.length > 0"
+            style="color: rgba(0, 0, 0, 0.54); font-size: 0.8em;padding-left:20px;">Press CTRL+ENTER to Search
+        </mat-label>
+        <div *ngIf="searchSliderFields.length === 0" class="no-smart-warn">
+            Please do a <strong>Search</strong> from a <strong>Smart input search widget</strong>
+        </div>
+        <!-- (changeSettings)="initSearchSlider()" -->
+
+        <!-- <button mat-raised-button color="primary" (click)="update(true)">Refresh Search</button> -->
+
+    </div>
+
+</div>
+</ng-template>
+
+
+
+    <ng-template #Loader>
+        <div class="lds-container">
+            <h3>
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </h3>
+        </div>
+    </ng-template>
+<!-- 
+  search slider
+-->
+
+
+
+<app-detail-dialogls *ngFor="let item of arrWindow; let idx = index" [titleId]="item.id"
+    [mouseEventData]="item.mouseEventData" [sipDataItem]="item.data" [qosData]="item.dataQOS"
+    [snapShotTimeRange]="item.snapShotTimeRange" [headerColor]="item.headerColor" [isLoaded]="item.loaded"
+    (openMessage)="addWindowMessage($event)" (close)="closeWindow(idx)"></app-detail-dialogls>
+
+<app-modal-resizable *ngFor="let item of arrMessageDetail; let idx = index" [title]="'Message ID: ' + item.id"
+    [headerColor]="item.headerColor" (close)="closeWindowMessage(idx)" [mouseEventData]="item.mouseEventData"
+    [startZIndex]="2000" [minWidth]="500" [minHeight]="400" [isBrowserWindow]="item.isBrowserWindow" [width]="500"
+    [height]="400">
+    <div *ngIf="!item.loaded" class="loading">
+        <mat-spinner></mat-spinner>
+    </div>
+    <app-message-content *ngIf="item.loaded" [data]="item.data"></app-message-content>
+</app-modal-resizable>
+
+<div *ngIf="isLoading" class="loading">
+    <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!isLokiQuery && !loader" style="position:absolute; bottom:0.4rem; left:0.2rem; opacity: 0.7;">
+    <button matTooltip="Column settings" mat-icon-button (click)="onSettingButtonClick()">
+        <mat-icon>settings_applications</mat-icon>
+    </button>
+    <button *ngIf="!inContainer" mat-icon-button matTooltip="Search config" (click)="isSearchPanel=!isSearchPanel">
+        <mat-icon [matBadge]="getSearchSlider()" [matBadgeHidden]="getSearchSlider() === 0" matBadgeColor="accent">
+            search</mat-icon>
+    </button>
+    <button mat-icon-button (click)='export()' onclick="this.blur()">
+        <mat-icon>get_app</mat-icon>
+    </button>
+</div>

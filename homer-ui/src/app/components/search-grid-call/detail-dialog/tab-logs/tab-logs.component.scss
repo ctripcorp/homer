@@ -1,0 +1,50 @@
+.hep-logs {
+	padding: 10px;
+}
+.hep-logs > * {
+	font-family:monospace !important;
+	font-size: 12px;
+}
+
+.hep-logs-header {
+	padding: 5px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	width: 100%;
+	display: table;
+	color: grey !important;
+	& > div {
+		display: table-cell;
+		width: 100%;
+		font-weight: bold;
+	}
+	& .hep-logs-time-header {
+		width: 189px;
+	}
+	& .hep-logs-messages-header {
+		width: calc(100% - 200px);
+		width: -moz-calc(100% - 200px);
+	}
+}
+.hep-logs-content {
+	display: table;
+	padding-top: 0px;
+	width: 100%;
+	.body-row {
+		display: table-row;
+		& > div {
+			display: table-cell;
+		}
+		& .hep-logs-time {
+			width: 189px;
+			& p {
+				padding-bottom: 0px;
+				margin-bottom: 0px;
+			}
+		}
+		& .hep-logs-messages {
+			width: calc(100% - 200px);
+			width: -moz-calc(100% - 200px);
+		}
+	}
+}

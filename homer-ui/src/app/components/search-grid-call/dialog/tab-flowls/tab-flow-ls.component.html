@@ -1,0 +1,72 @@
+<!-- flow grid lines -->
+<div [style.min-width.px]="pageWidth + 16" style="padding: 1px;"></div>
+<div class="flowscreen" [style.min-width.px]="pageWidth + 16" #flowscreen>
+    <div class="flow-grid-lines" [style.min-width.px]="pageWidth">
+        <!-- wrapper -->
+        <div *ngFor="let title of flowGridLines" class="line"></div>
+    </div>
+
+    <!-- hosts -->
+    <div class="hosts" [style.min-width.px]="pageWidth">
+        <!-- host titles -->
+        <ng-template ngFor let-itemhost [ngForOf]="aliasTitle">
+
+            <div *ngIf="itemhost && itemhost.empty" style="min-width: 100px;"></div>
+            <div *ngIf="itemhost && !itemhost.empty && !itemhost.hidden" matTooltipClass="iptooltip"
+                 [matTooltip]="itemhost.ip"
+                 [ngClass]="'item-wrapper' + (isSimplify ? ' big' : '')">
+                <!-- wrapper -->
+
+                <div class="item" style="user-select:text; cursor:pointer">
+                    <!-- container -->
+                    <div *ngIf="itemhost.alias !== itemhost.ip && itemhost.alias !== itemhost.IP && itemhost.alias !== ''"
+                         class="itemhost-alias"> {{
+                        itemhost.alias === itemhost.ip || itemhost.alias === '' ?
+                            itemhost.shortIPtext2 :
+                            itemhost.alias
+                        }} </div>
+                    <!-- <div style="font-size: 0.9em;color: #999">{{(_isSimplifyPort ? 'PORT:' + itemhost.PORT : '')}}</div> -->
+                    <div> {{ itemhost.ip }} </div>
+
+
+                </div>
+            </div>
+        </ng-template>
+    </div>
+
+    <!-- flow packets -->
+
+    <!-- REAL TIME FLOW -->
+    <cdk-virtual-scroll-viewport *ngIf="!isExport" [itemSize]="isSimplify ? 44 : 77" minBufferPx="50" maxBufferPx="400"
+                                 class="flow-packets-wrapper" auditTimeInMs="2" [style.min-width.px]="pageWidth + 100" (scroll)="onScroll($event)"
+                                 (mouseover)="setScrollTarget('virtualScroll')" #virtualScroll>
+        <app-flow-itemls *ngFor="let txItem of arrayItems; let idx = index" [txItem]="txItem" [idx]="idx"
+                       [isSimplify]="isSimplify" (click)="onClickItem($event.item, $event.event)" (clickItemShow)="onClickItemShow($event.index)">
+        </app-flow-itemls>
+
+        <div style="height: 40px;"></div>
+    </cdk-virtual-scroll-viewport>
+
+    <!-- EXPORT FLOW as PNG -->
+    <div *ngIf="isExport" class="flow-packets-wrapper" [style.min-width.px]="pageWidth + 100">
+        <app-flow-itemls *ngFor="let txItem of arrayItems; let idx = index" [txItem]="txItem" [idx]="idx" [isSimplify]="isSimplify"
+                       (click)="onClickItem($event.item, $event.event)">
+        </app-flow-itemls>
+        <div style="height: 40px;"></div>
+    </div>
+    <!-- </div> -->
+    <!--<div class="label-callid-container">-->
+        <!--<div class="label-callid-wrapper" *ngFor="let itemLabel of labels" [ngStyle]="{'color': itemLabel.color_sid}"> *-->
+            <!--{{ itemLabel.callid }} </div>-->
+    <!--</div>-->
+</div>
+
+
+<div id="download" style="display: none;">
+    <img #canvas>
+    <a #downloadLink></a>
+</div>
+<div class="virtual-scrollbar" *ngIf="!isExport" (mousedown)="setScrollTarget('virtualScrollbar')"
+     (scroll)="onScroll($event)" #virtualScrollbar>
+    <div [style.transform]="getVirtualScrollHeight" [style.padding.px]="1"></div>
+</div>

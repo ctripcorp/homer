@@ -1,0 +1,21 @@
+# cp homer-app.service /etc/systemd/system/
+# systemctl daemon-reload
+# systemctl start homer-app
+# systemctl enable homer-app
+
+[Unit]
+Description=Homer API Server and UI Webapplication
+After=network.target
+#Uncomment it only if you have postgresql on the same host!
+#After=network.target postgresql.service
+
+[Service]
+WorkingDirectory=/usr/local/homer
+ExecStart=/usr/local/bin/homer-app
+ExecStop=/bin/kill ${MAINPID}
+Restart=on-failure
+RestartSec=10s
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
