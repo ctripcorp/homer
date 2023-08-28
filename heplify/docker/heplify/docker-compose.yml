@@ -1,0 +1,6 @@
+version: '2'
+services:
+  heplify:
+    image: "sipcapture/heplify:master"
+    command: "./heplify -t af_packet -e"
+    container_name: "heplify"
